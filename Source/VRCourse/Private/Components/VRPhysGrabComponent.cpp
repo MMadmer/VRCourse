@@ -9,6 +9,7 @@ UVRPhysGrabComponent::UVRPhysGrabComponent()
 {
 	bIsParent = true;
 	bFreeGrab = false;
+	GrabObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_PhysicsBody));
 
 	SetIsReplicated(true);
 
@@ -88,12 +89,11 @@ FHitResult UVRPhysGrabComponent::FindGrabObject(const bool bDebug) const
 
 	const EDrawDebugTrace::Type DebugType = bDebug ? EDrawDebugTrace::ForDuration : EDrawDebugTrace::None;
 
-	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
-	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_PhysicsBody));
 
 	FHitResult HitResult{};
 	UKismetSystemLibrary::SphereTraceSingleForObjects(this, GetComponentLocation(), GetComponentLocation(), GrabRadius,
-	                                                  ObjectTypes, true, ActorsToIgnore, DebugType, HitResult, true);
+	                                                  GrabObjectTypes, true, ActorsToIgnore, DebugType, HitResult,
+	                                                  true);
 
 	return HitResult;
 }

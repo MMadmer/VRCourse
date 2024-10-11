@@ -39,6 +39,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	uint8 bFreeGrab : 1;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<TEnumAsByte<EObjectTypeQuery>> GrabObjectTypes;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FName SelfBoneName = FName();
 
