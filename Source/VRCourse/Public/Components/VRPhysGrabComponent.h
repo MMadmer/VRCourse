@@ -6,6 +6,8 @@
 #include "PhysicsEngine/PhysicsConstraintComponent.h"
 #include "VRPhysGrabComponent.generated.h"
 
+class UVRPhysGrabComponent;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGrabbed, UPrimitiveComponent*, GrabbedComp, UPrimitiveComponent*,
                                              ParentComp);
 

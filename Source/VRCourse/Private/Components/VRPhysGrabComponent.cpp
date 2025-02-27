@@ -37,9 +37,11 @@ bool UVRPhysGrabComponent::TryGrab(const bool bDebug)
 		ConnectComponents(PhysComp);
 	}
 
-	if (IsHeld()) OnGrabbed.Broadcast(GetHeldComponent(), GetParentComponent());
+	if (!IsHeld()) return false;
 
-	return IsHeld();
+	OnGrabbed.Broadcast(GetHeldComponent(), GetParentComponent());
+
+	return true;
 }
 
 bool UVRPhysGrabComponent::TryRelease()
@@ -51,9 +53,11 @@ bool UVRPhysGrabComponent::TryRelease()
 
 	BreakConstraint();
 
-	if (!IsHeld()) OnReleased.Broadcast(HeldComp, ParentComp);
+	if (IsHeld()) return false;
 
-	return !IsHeld();
+	OnReleased.Broadcast(HeldComp, ParentComp);
+
+	return true;
 }
 
 UPrimitiveComponent* UVRPhysGrabComponent::GetHeldComponent()
@@ -66,7 +70,7 @@ UPrimitiveComponent* UVRPhysGrabComponent::GetHeldComponent()
 
 	GetConstrainedComponents(FirstComp, FirstBone, SecondComp, SecondBone);
 
-	return bIsParent ? SecondComp : FirstComp;
+	return bIsParent ? FirstComp : SecondComp;
 }
 
 UPrimitiveComponent* UVRPhysGrabComponent::GetParentComponent()
@@ -79,7 +83,7 @@ UPrimitiveComponent* UVRPhysGrabComponent::GetParentComponent()
 
 	GetConstrainedComponents(FirstComp, FirstBone, SecondComp, SecondBone);
 
-	return bIsParent ? FirstComp : SecondComp;
+	return bIsParent ? SecondComp : FirstComp;
 }
 
 FHitResult UVRPhysGrabComponent::FindGrabObject(const bool bDebug) const
