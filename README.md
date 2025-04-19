@@ -1,1 +1,1 @@
-First VR project. Combined with course and self development.
+VR project. Combined with course and self development.
